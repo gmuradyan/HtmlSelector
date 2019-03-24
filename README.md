@@ -14,6 +14,9 @@ simple
 	class- .
 	id - #
 }
+ex: 1) -f path\file.html -s #sel1
+    2) -f path\file.html -s .sel2
+    3) -f path\file.html -s div
 
 Combined 
 {
@@ -21,6 +24,8 @@ Combined
 	tag+.id
 	
 }
+ex: 1) -f path\file.html -s div#sel1
+    2) -f path\file.html -s p.sel2
 
 Descendant 
 {
@@ -28,4 +33,6 @@ Descendant
 	tag+ probel+ ..tag.+ .class
 	tag + tag + ...
 }
-
+ex: 1) -f path\file.html -s div #sel1
+    2) -f path\file.html -s div p .sel2
+    3) -f path\file.html -s div h3
