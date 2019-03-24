@@ -68,4 +68,28 @@ public class Selectors {
         }
         return indCorrector;
     }
+
+    protected int findSelector(String htmlFile,String htmlSelector,SIMPLE_SELECTOR_TYPE type){
+        int indSelector;
+        if (( indSelector = htmlFile.indexOf(htmlSelector)) >= 0){
+            String findTyp;
+            if(type==SIMPLE_SELECTOR_TYPE.ELEMENT ){
+                return indSelector;
+            }else if(type==SIMPLE_SELECTOR_TYPE.ID ){
+                findTyp="id=";
+            }else{
+                findTyp="class";
+            }
+            int indStart=htmlFile.substring(0,indSelector).lastIndexOf(TAG_START);
+            String tmp=htmlFile.substring(indStart,indSelector+htmlSelector.length());
+            tmp=tmp.replaceAll(" ","");
+            if(tmp.indexOf(findTyp+htmlSelector)>=0){
+                return htmlFile.substring(0,indSelector).lastIndexOf(findTyp);
+            }
+            else{
+                return  -1;
+            }
+        }
+        return -1;
+    }
 }

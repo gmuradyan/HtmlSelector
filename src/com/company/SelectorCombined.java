@@ -58,17 +58,17 @@ public class SelectorCombined extends Selectors {
     public String getBySelector(String htmlFile) {
         StringBuilder result = new StringBuilder();
         try {
-            SelectorMembers member = replaseCombinedSelector(detectSelector());
+            SIMPLE_SELECTOR_TYPE type=detectSelector();
+            SelectorMembers member = replaseCombinedSelector(type);
             if (member != null) {
                 while (true) {
                     int indSelector = 0, indStart, indCorrector;
-                    if ((indSelector = htmlFile.indexOf(member.atribut)) >= 0) {
-
+                    //htmlFile.indexOf(member.atribut)
+                    if ((indSelector =findSelector(htmlFile,member.atribut,type)) >= 0) {
                         indStart = htmlFile.substring(0, indSelector).lastIndexOf(TAG_START);
                         htmlFile = htmlFile.substring(indStart);
                         String tag = htmlFile.substring(1, htmlFile.indexOf(" "));
                         if (tag.equals(member.tag)) {
-
                             if (HtmlValidator.HtmlTagsType.isSingleTeg(member.tag)) {
                                 indCorrector = htmlFile.indexOf(TAG_END) + 1;
                             } else {

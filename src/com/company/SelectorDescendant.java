@@ -115,16 +115,17 @@ public class SelectorDescendant extends Selectors {
         String htmlFile_original = htmlFile;
         StringBuilder result = new StringBuilder();
         try {
-            SelectorMembers member = replaseDescendantSelector(detectSelector());
+            SIMPLE_SELECTOR_TYPE type=detectSelector();
+            SelectorMembers member = replaseDescendantSelector(type);
             if (member != null) {
                 int counter = 0;
                 while (true) {
                     int indSelector = 0, indStart, indCorrector, length;
                     if (member.attribut != null) {
-                        indSelector = htmlFile.indexOf(member.attribut);
+                        indSelector = findSelector(htmlFile,member.attribut,type);//htmlFile.indexOf(member.attribut);
                         length = member.attribut.length();
                     } else {
-                        indSelector = htmlFile.indexOf(member.tag[member.tag.length - 1]);
+                        indSelector = findSelector(htmlFile,member.tag[member.tag.length - 1],type); //htmlFile.indexOf(member.tag[member.tag.length - 1]);
                         if (!isTag(new StringBuilder(htmlFile), indSelector) && indSelector > 0) {
                             counter += htmlFile.length();
                             htmlFile = htmlFile.substring(indSelector + member.tag[member.tag.length - 1].length());
