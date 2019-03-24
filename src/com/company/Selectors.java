@@ -76,18 +76,21 @@ public class Selectors {
             if(type==SIMPLE_SELECTOR_TYPE.ELEMENT ){
                 return indSelector;
             }else if(type==SIMPLE_SELECTOR_TYPE.ID ){
-                findTyp="id=";
+                findTyp="id";
             }else{
                 findTyp="class";
             }
             int indStart=htmlFile.substring(0,indSelector).lastIndexOf(TAG_START);
             String tmp=htmlFile.substring(indStart,indSelector+htmlSelector.length());
+int tmp_len=tmp.length();
             tmp=tmp.replaceAll(" ","");
-            if(tmp.indexOf(findTyp+htmlSelector)>=0){
-                return htmlFile.substring(0,indSelector).lastIndexOf(findTyp);
+tmp_len-=tmp.length();
+            if(tmp.indexOf(findTyp+"="+htmlSelector)>=0){
+                int a=htmlFile.substring(0,indSelector+tmp_len).lastIndexOf(findTyp);
+                return htmlFile.substring(0,indSelector+tmp_len).lastIndexOf(findTyp);
             }
             else{
-                return  -1;
+                return  -2;
             }
         }
         return -1;

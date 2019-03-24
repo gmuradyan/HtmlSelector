@@ -34,14 +34,12 @@ public class CommandHtmlSelector extends CommndHtmlLoader {
 
     public void commandHandel() throws NullPointerException {
         try {
-
-
             if (super.loadHtmlFile() && !selector.isEmpty()) {
                 Selectors selector = detectSelectorType();
                 String result = selector.getBySelector(htmlFile);
                 inOut.printFile(result);
             } else {
-                System.out.println("detectSelectorType method- html not valid, what to do?");
+                System.out.println("");
             }
         } catch (NullPointerException e) {
 

@@ -27,7 +27,7 @@ public class SelectorSimple extends Selectors {
             if (type == SIMPLE_SELECTOR_TYPE.ID) {
                 return "\"" + selector.substring(selector.indexOf(ID) + 1) + '"';//id=
             } else if (type == SIMPLE_SELECTOR_TYPE.CLASS) {
-                return "class=\"" + selector.substring(selector.indexOf(CLASS) + 1) + '"';
+                return "\"" + selector.substring(selector.indexOf(CLASS) + 1) + '"';
             }
 
         } catch (IndexOutOfBoundsException e) {
@@ -47,7 +47,7 @@ public class SelectorSimple extends Selectors {
         int indStart, indSelector;
         while (true) {
             //(indSelector = htmlFile.indexOf(htmlSelector))
-            if ((indSelector=findSelector(htmlFile,htmlSelector,type)) >= 0) {
+            if ((indSelector=findSelector(htmlFile.toLowerCase(),htmlSelector.toLowerCase(),type)) >= 0) {
                 if (type == SIMPLE_SELECTOR_TYPE.ELEMENT) {
                     if (!isTag(new StringBuilder(htmlFile), indSelector)) {
                         htmlFile = htmlFile.substring(indSelector + selector.length());

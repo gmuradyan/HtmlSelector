@@ -9,9 +9,9 @@ public class SelectorCombined extends Selectors {
         SelectorMembers(String members[], SIMPLE_SELECTOR_TYPE type) {
             this.tag = members[0];
             if (type == SIMPLE_SELECTOR_TYPE.ID) {
-                this.atribut = "id=\"" + members[1] + "\"";
+                this.atribut = "\"" + members[1] + "\"";
             } else {
-                this.atribut = "class=\"" + members[1] + "\"";
+                this.atribut = "\"" + members[1] + "\"";
             }
         }
     }
@@ -58,13 +58,13 @@ public class SelectorCombined extends Selectors {
     public String getBySelector(String htmlFile) {
         StringBuilder result = new StringBuilder();
         try {
-            SIMPLE_SELECTOR_TYPE type=detectSelector();
+            SIMPLE_SELECTOR_TYPE type = detectSelector();
             SelectorMembers member = replaseCombinedSelector(type);
             if (member != null) {
                 while (true) {
                     int indSelector = 0, indStart, indCorrector;
                     //htmlFile.indexOf(member.atribut)
-                    if ((indSelector =findSelector(htmlFile,member.atribut,type)) >= 0) {
+                    if ((indSelector = findSelector(htmlFile.toLowerCase(), member.atribut.toLowerCase(), type)) >= 0) {
                         indStart = htmlFile.substring(0, indSelector).lastIndexOf(TAG_START);
                         htmlFile = htmlFile.substring(indStart);
                         String tag = htmlFile.substring(1, htmlFile.indexOf(" "));
@@ -81,7 +81,10 @@ public class SelectorCombined extends Selectors {
                             htmlFile = htmlFile.substring(1 + member.atribut.length());
                             continue;
                         }
-                    } else {
+                    }else if(indSelector == -2 ){
+                        htmlFile = htmlFile.substring(htmlFile.indexOf(member.atribut)+member.atribut.length());
+                    }
+                    else {
                         break;
                     }
                 }

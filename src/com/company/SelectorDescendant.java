@@ -13,9 +13,9 @@ public class SelectorDescendant extends Selectors {
         SelectorMembers(String members[], String attribut, SIMPLE_SELECTOR_TYPE type) {
 
             if (type == SIMPLE_SELECTOR_TYPE.ID) {
-                this.attribut = "id=\"" + attribut + "\"";
+                this.attribut = "\"" + attribut + "\"";
             } else if (type == SIMPLE_SELECTOR_TYPE.CLASS) {
-                this.attribut = "class=\"" + attribut + "\"";
+                this.attribut = "\"" + attribut + "\"";
             } else {
                 attribut = null;
             }
@@ -122,7 +122,7 @@ public class SelectorDescendant extends Selectors {
                 while (true) {
                     int indSelector = 0, indStart, indCorrector, length;
                     if (member.attribut != null) {
-                        indSelector = findSelector(htmlFile,member.attribut,type);//htmlFile.indexOf(member.attribut);
+                        indSelector = findSelector(htmlFile.toLowerCase(),member.attribut.toLowerCase(),type);//htmlFile.indexOf(member.attribut);
                         length = member.attribut.length();
                     } else {
                         indSelector = findSelector(htmlFile,member.tag[member.tag.length - 1],type); //htmlFile.indexOf(member.tag[member.tag.length - 1]);
@@ -134,7 +134,15 @@ public class SelectorDescendant extends Selectors {
                         }
                         length = member.tag[member.tag.length - 1].length();
                     }
-                    if (indSelector >= 0) {
+
+                    if(indSelector == -2 ){
+
+                        counter += htmlFile.length();
+                        htmlFile = htmlFile.substring(htmlFile.indexOf(member.attribut)+member.attribut.length());
+                        counter -= htmlFile.length();
+
+                    }
+                    else if (indSelector >= 0) {
                         indStart = htmlFile.substring(0, indSelector).lastIndexOf(TAG_START);
 
                         if (checkTagSequence(member, htmlFile_original, indStart + counter)) {
